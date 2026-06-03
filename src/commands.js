@@ -3,17 +3,16 @@
  * and registration.
  */
 
-export const INVITE_COMMAND = {
-  name: 'invite',
-  description: 'Get an invite link to add the bot to your server',
-};
-
-export const GREET_COMMAND = {
-  name: 'greet',
-  description: 'greeting',
-};
+import { SIMPLE_GREETING_CONFIG } from './config.js';
+import { JANKEN_CONFIG } from './config.js';
 
 export const JANKEN_COMMAND = {
-  name: 'janken',
-  description: 'じゃんけん',
+  name: JANKEN_CONFIG.commandName,
+  description: JANKEN_CONFIG.description,
 };
+
+export function get_simple_greeting_commands() {
+  return SIMPLE_GREETING_CONFIG.greetings.map(({ name, description }) => {
+    return { name: name, description: description };
+  });
+}

@@ -8,10 +8,12 @@ import {
   InteractionType,
   verifyKey,
 } from 'discord-interactions';
-import { INVITE_COMMAND, GREET_COMMAND, JANKEN_COMMAND } from './commands.js';
-import { greet } from './commands/greet.js';
+import { JANKEN_COMMAND } from './commands.js';
 import { jankenStart, jankenPon } from './commands/janken.js';
-import { InteractionResponseFlags } from 'discord-interactions';
+import {
+  SIMPLE_GREETINGS,
+  simpleGreeting,
+} from './commands/simple-greeting.js';
 
 class JsonResponse extends Response {
   constructor(body, init) {
@@ -58,21 +60,11 @@ router.post('/', async (request, env) => {
 
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     // Most user commands will come as `APPLICATION_COMMAND`.
-    switch (interaction.data.name.toLowerCase()) {
-      case INVITE_COMMAND.name.toLowerCase(): {
-        const applicationId = env.DISCORD_APPLICATION_ID;
-        const INVITE_URL = `https://discord.com/oauth2/authorize?client_id=${applicationId}&scope=applications.commands`;
-        return new JsonResponse({
-          type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-          data: {
-            content: INVITE_URL,
-            flags: InteractionResponseFlags.EPHEMERAL,
-          },
-        });
-      }
-      case GREET_COMMAND.name.toLowerCase(): {
-        return new JsonResponse(greet());
-      }
+    const commandName = interaction.data.name.toLowerCase();
+    if (commandName in SIMPLE_GREETINGS) {
+      return new JsonResponse(simpleGreeting(commandName, interaction));
+    }
+    switch (commandName) {
       case JANKEN_COMMAND.name.toLowerCase(): {
         return new JsonResponse(jankenStart(interaction));
       }

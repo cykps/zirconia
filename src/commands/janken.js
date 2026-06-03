@@ -86,7 +86,6 @@ export function jankenPon(interaction) {
   // 勝敗判定
   const userHand = HANDS[hand];
   const botHand = HANDS_LIST[Math.floor(Math.random() * 3)];
-  console.log(userHand, botHand);
   const result = judge(userHand, botHand);
 
   // メッセージ生成
