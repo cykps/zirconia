@@ -14,6 +14,7 @@ import {
   SIMPLE_GREETINGS,
   simpleGreeting,
 } from './commands/simple-greeting.js';
+import { gacha, GACHAS } from './commands/gacha.js';
 
 class JsonResponse extends Response {
   constructor(body, init) {
@@ -61,6 +62,9 @@ router.post('/', async (request, env) => {
   if (interaction.type === InteractionType.APPLICATION_COMMAND) {
     // Most user commands will come as `APPLICATION_COMMAND`.
     const commandName = interaction.data.name.toLowerCase();
+    if (commandName in GACHAS) {
+      return new JsonResponse(gacha(commandName, interaction));
+    }
     if (commandName in SIMPLE_GREETINGS) {
       return new JsonResponse(simpleGreeting(commandName, interaction));
     }

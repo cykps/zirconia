@@ -38,3 +38,20 @@ export const SIMPLE_GREETING_CONFIG = {
     },
   ],
 };
+
+export const GACHA_CONFIG = {
+  gachas: [
+    {
+      name: 'omikuji',
+      description: 'おみくじ',
+      choices: [
+        { message: '大吉', weight: 3 },
+        { message: '吉', weight: 10 },
+        { message: '中吉', weight: 9 },
+        { message: '小吉', weight: 8 },
+        { message: '末吉', weight: 7 },
+        { message: '凶', weight: 2 },
+      ],
+    },
+  ],
+};
