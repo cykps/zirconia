@@ -10,7 +10,7 @@ export const JANKEN_CONFIG = {
 
   messages: {
     start: 'じゃんけん...',
-    result: (userHand, botHand, interaction) => {
+    result: ({ userHand, botHand, interaction }) => {
       const isFirstMatch =
         interaction.message.content.endsWith('じゃんけん...');
       return [

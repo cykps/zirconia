@@ -29,7 +29,9 @@ const HANDS_LIST = [HANDS.rock, HANDS.paper, HANDS.scissors];
 // `/janken` コマンドが実行されたときに呼び出される関数
 export function jankenStart(interaction) {
   const userId = interaction.member.user.id;
-  const startMessage = genelateMessage(CONFIG.messages.start, interaction);
+  const startMessage = genelateMessage(CONFIG.messages.start, {
+    interaction: interaction,
+  });
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
@@ -73,7 +75,9 @@ export function jankenPon(interaction) {
   const clickedUserId = interaction.member.user.id;
 
   if (clickedUserId !== ownerId) {
-    const errorMessage = genelateMessage(CONFIG.messages.notGameOwner);
+    const errorMessage = genelateMessage(CONFIG.messages.notGameOwner, {
+      interaction: interaction,
+    });
     return {
       type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
       data: {
@@ -89,21 +93,19 @@ export function jankenPon(interaction) {
   const result = judge(userHand, botHand);
 
   // メッセージ生成
-  const resultMessage = genelateMessage(
-    CONFIG.messages.result,
-    userHand,
-    botHand,
-    interaction,
-  );
+  const resultMessage = genelateMessage(CONFIG.messages.result, {
+    userHand: userHand,
+    botHand: botHand,
+    interaction: interaction,
+  });
 
   //// あいこの場合
   if (result === 0) {
-    const drawMessage = genelateMessage(
-      CONFIG.messages.draw,
-      userHand,
-      botHand,
-      interaction,
-    );
+    const drawMessage = genelateMessage(CONFIG.messages.draw, {
+      userHand: userHand,
+      botHand: botHand,
+      interaction: interaction,
+    });
     return {
       type: InteractionResponseType.UPDATE_MESSAGE,
       data: {
@@ -114,7 +116,11 @@ export function jankenPon(interaction) {
 
   //// 勝負がついた場合
   const formatter = result === 1 ? CONFIG.messages.win : CONFIG.messages.lose;
-  const message = genelateMessage(formatter, userHand, botHand, interaction);
+  const message = genelateMessage(formatter, {
+    userHand: userHand,
+    botHand: botHand,
+    interaction: interaction,
+  });
   return {
     type: InteractionResponseType.UPDATE_MESSAGE,
     data: {

@@ -8,8 +8,10 @@ export const SIMPLE_GREETINGS = Object.fromEntries(
   }),
 );
 
-export function simpleGreeting(commandName, intraction) {
-  const message = genelateMessage(SIMPLE_GREETINGS[commandName].message);
+export function simpleGreeting(commandName, interaction) {
+  const message = genelateMessage(SIMPLE_GREETINGS[commandName].message, {
+    interaction: interaction,
+  });
 
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,

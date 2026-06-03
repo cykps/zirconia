@@ -1,13 +1,13 @@
-export function genelateMessage(formatter, ...args) {
+export function genelateMessage(formatter, props) {
   if (typeof formatter === 'function') {
-    return formatter(...args);
+    return formatter(props);
   }
   if (typeof formatter === 'string') {
     return formatter;
   }
   if (Array.isArray(formatter)) {
     let r = Math.floor(Math.random() * formatter.length);
-    return genelateMessage(formatter[r], ...args);
+    return genelateMessage(formatter[r], props);
   }
 
   return 'メッセージ未登録';
