@@ -71,13 +71,14 @@ export const DICE_CONFIG = {
   maxVisibleRolls: 100,
 
   messages: {
-    result: ({ rolls, total, diceCount, diceSides, areRollsTruncated }) => {
+    result: ({ rolls, areRollsTruncated, total, diceSides, diceCount }) => {
       return [
-        `${diceCount}d${diceSides} 🎲 ${rolls.join(',')}${areRollsTruncated ? ', ...' : ''}`,
+        `${diceCount}d${diceSides} 🎲`,
+        `> ${rolls.join(',')}${areRollsTruncated ? ', ...' : ''}`,
         `合計: ${total}`,
       ].join('\n');
     },
 
-    invalidDiceText: '不正な入力です',
+    invalidOption: '不正なオプションです',
   },
 };

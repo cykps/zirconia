@@ -1,19 +1,19 @@
-import { DICE_CONFIG as CONFIG } from '../config';
-import { generateMessage, getOption } from '../utils';
-import { InteractionResponseType } from 'discord-interactions';
+import { DICE_CONFIG as CONFIG } from '../config.js';
+import { generateMessage, getOption } from '../utils.js';
+import {
+  InteractionResponseType,
+  InteractionResponseFlags,
+} from 'discord-interactions';
 
 export function dice(interaction) {
-  console.log('d:called');
-
   // ndn オプションの解釈
   const countOption = getOption(interaction, 'count');
   const sidesOption = getOption(interaction, 'sides');
-  const diceSides = sidesOption?.value;
   const diceCount = countOption?.value;
+  const diceSides = sidesOption?.value;
 
-  console.log('d:option', diceSides, diceCount);
-  if (typeof diceSides != 'number' || typeof diceCount != 'number') {
-    const errorMessage = generateMessage(CONFIG.messages.invalidDiceText, {
+  if (typeof diceCount != 'number' || typeof diceSides != 'number') {
+    const errorMessage = generateMessage(CONFIG.messages.invalidOption, {
       interaction: interaction,
     });
     return {
@@ -25,10 +25,8 @@ export function dice(interaction) {
     };
   }
 
-  console.log('d: count and size', diceCount, diceSides);
-
   // rolls が長すぎる場合は省略
-  const rolls = rollDices(diceSides, diceCount);
+  const rolls = rollDiceMany(diceCount, diceSides);
   const total = calculateTotal(rolls);
   let truncatedRolls = rolls;
   let areRollsTruncated = false;
@@ -36,8 +34,6 @@ export function dice(interaction) {
     truncatedRolls = rolls.slice(0, CONFIG.maxVisibleRolls);
     areRollsTruncated = true;
   }
-
-  console.log('d:truncate', truncatedRolls, areRollsTruncated);
 
   // メッセージ生成
   const message = generateMessage(CONFIG.messages.result, {
@@ -49,7 +45,6 @@ export function dice(interaction) {
     rollsRaw: rolls,
   });
 
-  console.log('d:msg', message);
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
@@ -58,23 +53,7 @@ export function dice(interaction) {
   };
 }
 
-function parseDiceNotation(text) {
-  const match = text.match(/^(\d+)d(\d+)$/i);
-  if (!match) {
-    return null;
-  }
-
-  const count = Number(match[1]);
-  const sides = Number(match[2]);
-
-  if (!Number.isInteger(count) || !Number.isInteger(sides)) {
-    return null;
-  }
-
-  return { count, sides };
-}
-
-function rollDices(sides, count) {
+function rollDiceMany(count, sides) {
   const results = [];
   for (let i = 0; i < count; i++) {
     results.push(rollDice(sides));
