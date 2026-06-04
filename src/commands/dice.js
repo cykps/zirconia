@@ -12,7 +12,7 @@ export function dice(interaction) {
   const diceCount = countOption?.value;
   const diceSides = sidesOption?.value;
 
-  if (typeof diceCount != 'number' || typeof diceSides != 'number') {
+  if (typeof diceCount !== 'number' || typeof diceSides !== 'number') {
     const errorMessage = generateMessage(CONFIG.messages.invalidOption, {
       interaction: interaction,
     });
@@ -56,12 +56,12 @@ export function dice(interaction) {
 function rollDiceMany(count, sides) {
   const results = [];
   for (let i = 0; i < count; i++) {
-    results.push(rollDice(sides));
+    results.push(rollDie(sides));
   }
   return results;
 }
 
-function rollDice(sides) {
+function rollDie(sides) {
   return Math.floor(Math.random() * sides) + 1;
 }
 
