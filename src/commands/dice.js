@@ -1,9 +1,10 @@
 import { DICE_CONFIG as CONFIG } from '../config.js';
-import { generateMessage, getOption } from '../utils.js';
 import {
-  InteractionResponseType,
-  InteractionResponseFlags,
-} from 'discord-interactions';
+  createEphemeralResponse,
+  generateMessage,
+  getOption,
+} from '../utils.js';
+import { InteractionResponseType } from 'discord-interactions';
 
 export function dice(interaction) {
   // ndn オプションの解釈
@@ -16,13 +17,7 @@ export function dice(interaction) {
     const errorMessage = generateMessage(CONFIG.messages.invalidOption, {
       interaction: interaction,
     });
-    return {
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        content: errorMessage,
-        flags: InteractionResponseFlags.EPHEMERAL,
-      },
-    };
+    return createEphemeralResponse(errorMessage);
   }
 
   // rolls が長すぎる場合は省略

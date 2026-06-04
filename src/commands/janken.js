@@ -1,9 +1,10 @@
-import {
-  InteractionResponseFlags,
-  InteractionResponseType,
-} from 'discord-interactions';
+import { InteractionResponseType } from 'discord-interactions';
 import { JANKEN_CONFIG as CONFIG } from '../config.js';
-import { generateMessage, normalizeEmoji } from '../utils.js';
+import {
+  createEphemeralResponse,
+  generateMessage,
+  normalizeEmoji,
+} from '../utils.js';
 
 // 手の定義
 const HANDS = {
@@ -51,13 +52,7 @@ export function handleJankenButton(interaction) {
     const errorMessage = generateMessage(CONFIG.messages.invalidButton, {
       interaction: interaction,
     });
-    return {
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        content: errorMessage,
-        flags: InteractionResponseFlags.EPHEMERAL,
-      },
-    };
+    return createEphemeralResponse(errorMessage);
   }
   const { ownerId, hand } = parsedCustomId;
 
@@ -67,13 +62,7 @@ export function handleJankenButton(interaction) {
     const errorMessage = generateMessage(CONFIG.messages.notGameOwner, {
       interaction: interaction,
     });
-    return {
-      type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-      data: {
-        content: errorMessage,
-        flags: InteractionResponseFlags.EPHEMERAL,
-      },
-    };
+    return ephemeralMessage(errorMessage);
   }
 
   // 勝敗判定

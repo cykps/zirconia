@@ -1,3 +1,8 @@
+import {
+  InteractionResponseFlags,
+  InteractionResponseType,
+} from 'discord-interactions';
+
 export function generateMessage(formatter, props) {
   if (typeof formatter === 'function') {
     return formatter(props);
@@ -20,4 +25,14 @@ export function normalizeEmoji(emoji) {
 
 export function getOption(interaction, name) {
   return interaction.data.options?.find((option) => option.name === name);
+}
+
+export function createEphemeralResponse(content) {
+  return {
+    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
+    data: {
+      content: content,
+      flags: InteractionResponseFlags.EPHEMERAL,
+    },
+  };
 }
