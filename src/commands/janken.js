@@ -1,5 +1,7 @@
-import { InteractionResponseType } from 'discord-interactions';
-import { InteractionResponseFlags } from 'discord-interactions';
+import {
+  InteractionResponseFlags,
+  InteractionResponseType,
+} from 'discord-interactions';
 import { JANKEN_CONFIG as CONFIG } from '../config.js';
 import { generateMessage, normalizeEmoji } from '../utils.js';
 
@@ -44,7 +46,7 @@ export function jankenStart(interaction) {
 // ユーザーがグー・チョキ・パーのボタンを押したときに呼び出される関数
 export function jankenPon(interaction) {
   // ボタンの `custom_id` の妥当性チェック
-  const parsedCustomId = interaction.data.custom_id.split(':');
+  const parsedCustomId = parseHandCustomId(interaction.data.custom_id);
   if (parsedCustomId === null) {
     const errorMessage = generateMessage(CONFIG.messages.invalidButton, {
       interaction: interaction,
