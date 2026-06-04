@@ -10,10 +10,7 @@ import {
 } from 'discord-interactions';
 import { JANKEN_COMMAND } from './commands.js';
 import { jankenStart, jankenPon } from './commands/janken.js';
-import {
-  SIMPLE_GREETINGS,
-  simpleGreeting,
-} from './commands/simple-greeting.js';
+import { SIMPLE_REPLIES, simpleReply } from './commands/simple-reply.js';
 import { gacha, GACHAS } from './commands/gacha.js';
 
 class JsonResponse extends Response {
@@ -65,8 +62,8 @@ router.post('/', async (request, env) => {
     if (commandName in GACHAS) {
       return new JsonResponse(gacha(commandName, interaction));
     }
-    if (commandName in SIMPLE_GREETINGS) {
-      return new JsonResponse(simpleGreeting(commandName, interaction));
+    if (commandName in SIMPLE_REPLIES) {
+      return new JsonResponse(simpleReply(commandName, interaction));
     }
     switch (commandName) {
       case JANKEN_COMMAND.name.toLowerCase(): {

@@ -1,7 +1,7 @@
 import {
   JANKEN_COMMAND,
   get_gacha_commands,
-  get_simple_greeting_commands,
+  get_simple_reply_commands,
 } from './commands.js';
 import dotenv from 'dotenv';
 import process from 'node:process';
@@ -40,7 +40,7 @@ const response = await fetch(url, {
   method: 'PUT',
   body: JSON.stringify([
     JANKEN_COMMAND,
-    ...get_simple_greeting_commands(),
+    ...get_simple_reply_commands(),
     ...get_gacha_commands(),
   ]),
 });

@@ -1,4 +1,4 @@
-export function genelateMessage(formatter, props) {
+export function generateMessage(formatter, props) {
   if (typeof formatter === 'function') {
     return formatter(props);
   }
@@ -6,8 +6,8 @@ export function genelateMessage(formatter, props) {
     return formatter;
   }
   if (Array.isArray(formatter)) {
-    let r = Math.floor(Math.random() * formatter.length);
-    return genelateMessage(formatter[r], props);
+    let random = Math.floor(Math.random() * formatter.length);
+    return generateMessage(formatter[random], props);
   }
 
   return 'メッセージ未登録';

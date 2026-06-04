@@ -3,7 +3,7 @@
  * and registration.
  */
 
-import { SIMPLE_GREETING_CONFIG, GACHA_CONFIG } from './config.js';
+import { SIMPLE_REPLY_CONFIG, GACHA_CONFIG } from './config.js';
 import { JANKEN_CONFIG } from './config.js';
 
 export const JANKEN_COMMAND = {
@@ -11,8 +11,8 @@ export const JANKEN_COMMAND = {
   description: JANKEN_CONFIG.description,
 };
 
-export function get_simple_greeting_commands() {
-  return SIMPLE_GREETING_CONFIG.greetings.map(({ name, description }) => {
+export function get_simple_reply_commands() {
+  return SIMPLE_REPLY_CONFIG.replies.map(({ name, description }) => {
     return { name: name, description: description };
   });
 }

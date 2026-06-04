@@ -1,5 +1,5 @@
 import { GACHA_CONFIG as CONFIG } from '../config.js';
-import { genelateMessage } from '../utils.js';
+import { generateMessage } from '../utils.js';
 import { InteractionResponseType } from 'discord-interactions';
 
 export const GACHAS = Object.fromEntries(
@@ -10,9 +10,8 @@ export const GACHAS = Object.fromEntries(
 
 export function gacha(commandName, interaction) {
   const gacha = GACHAS[commandName];
-  const r = Math.floor(Math.random() * gacha.totalWeight);
-  const drawnChoice = judge(r, gacha.choices);
-  const message = genelateMessage(drawnChoice.message, {
+  const drawnChoice = drawChoice(gacha);
+  const message = generateMessage(drawnChoice.message, {
     interaction: interaction,
     gacha: gacha,
     drawnChoice: drawnChoice,
@@ -30,10 +29,12 @@ function calculateTotalWeight(gacha) {
   return gacha.choices.reduce((sum, item) => sum + item.weight, 0);
 }
 
-function judge(number, choices) {
-  for (const choice of choices) {
-    number -= choice.weight;
-    if (number < 0) {
+function drawChoice(gacha) {
+  console.log(gacha);
+  let random = Math.floor(Math.random() * gacha.totalWeight);
+  for (const choice of gacha.choices) {
+    random -= choice.weight;
+    if (random < 0) {
       return choice;
     }
   }

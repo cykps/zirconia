@@ -19,18 +19,19 @@ export const JANKEN_CONFIG = {
       ].join('\n');
     },
     draw: 'あいこで...',
-    win: ['Bot の勝ち！', 'あなたの負け'],
-    lose: ['Bot の負け！', 'あなたの勝ち！'],
+    botWin: ['Bot の勝ち！', 'あなたの負け'],
+    userWin: ['Bot の負け！', 'あなたの勝ち！'],
 
     notGameOwner: '他人のマッチです！`/janken` で自分のマッチを始めましょう',
+    invalidButton: '不正なボタンです',
   },
 
   // maxMatches: 3, //todo
 };
 
-export const SIMPLE_GREETING_CONFIG = {
-  greetings: [
-    { name: 'hallo', description: 'genneral greeting', message: 'hallo' },
+export const SIMPLE_REPLY_CONFIG = {
+  replies: [
+    { name: 'hallo', description: 'general reply', message: 'hallo' },
     {
       name: 'dice',
       description: 'random 1~6',
