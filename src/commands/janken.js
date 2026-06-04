@@ -62,7 +62,7 @@ export function handleJankenButton(interaction) {
     const errorMessage = generateMessage(CONFIG.messages.notGameOwner, {
       interaction: interaction,
     });
-    return ephemeralMessage(errorMessage);
+    return createEphemeralResponse(errorMessage);
   }
 
   // 勝敗判定
