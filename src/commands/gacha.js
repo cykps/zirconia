@@ -30,7 +30,6 @@ function calculateTotalWeight(gacha) {
 }
 
 function drawChoice(gacha) {
-  console.log(gacha);
   let random = Math.floor(Math.random() * gacha.totalWeight);
   for (const choice of gacha.choices) {
     random -= choice.weight;

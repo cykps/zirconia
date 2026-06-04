@@ -17,3 +17,7 @@ export function normalizeEmoji(emoji) {
   // remove `uFE0F` (Variation Selector-16)
   return emoji.normalize('NFC').replace(/\uFE0F/g, '');
 }
+
+export function getOption(interaction, name) {
+  return interaction.data.options?.find((option) => option.name === name);
+}

@@ -33,7 +33,7 @@ export const SIMPLE_REPLY_CONFIG = {
   replies: [
     { name: 'hallo', description: 'general reply', message: 'hallo' },
     {
-      name: 'dice',
+      name: 'dice6',
       description: 'random 1~6',
       message: ['1', '2', '3', '4', '5', '6'],
     },
@@ -55,4 +55,29 @@ export const GACHA_CONFIG = {
       ],
     },
   ],
+};
+
+export const DICE_CONFIG = {
+  commandName: 'dice',
+  description: '🎲さいころをふる',
+
+  countOptionDescription: 'サイコロの個数',
+  maxDiceCount: 1000,
+
+  sidesOptionDescription: 'サイコロの面数',
+  maxDiceSides: 100_000_000,
+
+  // 表示される個々の出目の最大数
+  maxVisibleRolls: 100,
+
+  messages: {
+    result: ({ rolls, total, diceCount, diceSides, areRollsTruncated }) => {
+      return [
+        `${diceCount}d${diceSides} 🎲 ${rolls.join(',')}${areRollsTruncated ? ', ...' : ''}`,
+        `合計: ${total}`,
+      ].join('\n');
+    },
+
+    invalidDiceText: '不正な入力です',
+  },
 };

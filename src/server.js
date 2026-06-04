@@ -8,10 +8,11 @@ import {
   InteractionType,
   verifyKey,
 } from 'discord-interactions';
-import { JANKEN_COMMAND } from './commands.js';
+import { JANKEN_COMMAND, DICE_COMMAND } from './commands.js';
 import { handleJankenCommand, handleJankenButton } from './commands/janken.js';
 import { SIMPLE_REPLIES, simpleReply } from './commands/simple-reply.js';
 import { gacha, GACHAS } from './commands/gacha.js';
+import { dice } from './commands/dice.js';
 
 class JsonResponse extends Response {
   constructor(body, init) {
@@ -68,6 +69,9 @@ router.post('/', async (request, env) => {
     switch (commandName) {
       case JANKEN_COMMAND.name.toLowerCase(): {
         return new JsonResponse(handleJankenCommand(interaction));
+      }
+      case DICE_COMMAND.name.toLowerCase(): {
+        return new JsonResponse(dice(interaction));
       }
       default:
         return new JsonResponse({ error: 'Unknown Type' }, { status: 400 });

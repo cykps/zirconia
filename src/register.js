@@ -1,5 +1,6 @@
 import {
   JANKEN_COMMAND,
+  DICE_COMMAND,
   get_gacha_commands,
   get_simple_reply_commands,
 } from './commands.js';
@@ -40,6 +41,7 @@ const response = await fetch(url, {
   method: 'PUT',
   body: JSON.stringify([
     JANKEN_COMMAND,
+    DICE_COMMAND,
     ...get_simple_reply_commands(),
     ...get_gacha_commands(),
   ]),
