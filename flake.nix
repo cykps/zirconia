@@ -1,0 +1,25 @@
+{
+  description = "zirconia dev env";
+
+  inputs = {
+    nixpkgs.url = "github:nixos/nixpkgs?ref=nixos-unstable";
+  };
+
+  outputs =
+    { self, nixpkgs }:
+    let
+      system = "x86_64-linux";
+      pkgs = import nixpkgs { inherit system; };
+    in
+    {
+      # 開発シェル定義
+      devShells.${system}.default = pkgs.mkShell {
+        name = "zirconia";
+        buildInputs = with pkgs; [
+          nodejs_22
+          wrangler
+          cloudflared
+        ];
+      };
+    };
+}
