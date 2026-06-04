@@ -9,7 +9,7 @@ import {
   verifyKey,
 } from 'discord-interactions';
 import { JANKEN_COMMAND } from './commands.js';
-import { jankenStart, jankenPon } from './commands/janken.js';
+import { handleJankenCommand, handleJankenButton } from './commands/janken.js';
 import { SIMPLE_REPLIES, simpleReply } from './commands/simple-reply.js';
 import { gacha, GACHAS } from './commands/gacha.js';
 
@@ -67,7 +67,7 @@ router.post('/', async (request, env) => {
     }
     switch (commandName) {
       case JANKEN_COMMAND.name.toLowerCase(): {
-        return new JsonResponse(jankenStart(interaction));
+        return new JsonResponse(handleJankenCommand(interaction));
       }
       default:
         return new JsonResponse({ error: 'Unknown Type' }, { status: 400 });
@@ -76,7 +76,7 @@ router.post('/', async (request, env) => {
 
   if (interaction.type === InteractionType.MESSAGE_COMPONENT) {
     if (interaction.data.custom_id.startsWith('janken:')) {
-      return new JsonResponse(jankenPon(interaction));
+      return new JsonResponse(handleJankenButton(interaction));
     }
   }
 

@@ -29,7 +29,7 @@ const HANDS = {
 const HANDS_LIST = [HANDS.rock, HANDS.paper, HANDS.scissors];
 
 // `/janken` コマンドが実行されたときに呼び出される関数
-export function jankenStart(interaction) {
+export function handleJankenCommand(interaction) {
   const userId = interaction.member.user.id;
   const startMessage = generateMessage(CONFIG.messages.start, {
     interaction: interaction,
@@ -44,7 +44,7 @@ export function jankenStart(interaction) {
 }
 
 // ユーザーがグー・チョキ・パーのボタンを押したときに呼び出される関数
-export function jankenPon(interaction) {
+export function handleJankenButton(interaction) {
   // ボタンの `custom_id` の妥当性チェック
   const parsedCustomId = parseHandCustomId(interaction.data.custom_id);
   if (parsedCustomId === null) {
@@ -59,7 +59,7 @@ export function jankenPon(interaction) {
       },
     };
   }
-  const [ownerId, hand] = parsedCustomId;
+  const { ownerId, hand } = parsedCustomId;
 
   // じゃんけんを始めた人とボタンを押した人の同一性チェック
   const clickedUserId = interaction.member.user.id;
