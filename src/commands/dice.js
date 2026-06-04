@@ -8,8 +8,8 @@ import { InteractionResponseType } from 'discord-interactions';
 
 export function dice(interaction) {
   // ndn オプションの解釈
-  const countOption = getOption(interaction, 'count');
-  const sidesOption = getOption(interaction, 'sides');
+  const countOption = getOption(interaction, CONFIG.countOption);
+  const sidesOption = getOption(interaction, CONFIG.sidesOption);
   const diceCount = countOption?.value;
   const diceSides = sidesOption?.value;
 

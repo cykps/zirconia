@@ -4,6 +4,7 @@ import {
   get_gacha_commands,
   get_simple_reply_commands,
 } from './commands.js';
+import { JANKEN_CONFIG, DICE_CONFIG } from './config.js';
 import dotenv from 'dotenv';
 import process from 'node:process';
 
@@ -33,18 +34,21 @@ if (!applicationId) {
  */
 const url = `https://discord.com/api/v10/applications/${applicationId}/commands`;
 
+const commands = [...get_simple_reply_commands(), ...get_gacha_commands()];
+if (JANKEN_CONFIG.enable) {
+  commands.push(JANKEN_COMMAND);
+}
+if (DICE_CONFIG.enable) {
+  commands.push(DICE_COMMAND);
+}
+
 const response = await fetch(url, {
   headers: {
     'Content-Type': 'application/json',
     Authorization: `Bot ${token}`,
   },
   method: 'PUT',
-  body: JSON.stringify([
-    JANKEN_COMMAND,
-    DICE_COMMAND,
-    ...get_simple_reply_commands(),
-    ...get_gacha_commands(),
-  ]),
+  body: JSON.stringify(commands),
 });
 
 if (response.ok) {

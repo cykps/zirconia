@@ -3,8 +3,12 @@
  * and registration.
  */
 
-import { SIMPLE_REPLY_CONFIG, GACHA_CONFIG, DICE_CONFIG } from './config.js';
-import { JANKEN_CONFIG } from './config.js';
+import {
+  SIMPLE_REPLY_CONFIG,
+  GACHA_CONFIG,
+  JANKEN_CONFIG,
+  DICE_CONFIG,
+} from './config.js';
 
 export const JANKEN_COMMAND = {
   name: JANKEN_CONFIG.commandName,
@@ -17,7 +21,7 @@ export const DICE_COMMAND = {
   options: [
     {
       type: 4,
-      name: 'count',
+      name: DICE_CONFIG.countOption,
       description: DICE_CONFIG.countOptionDescription,
       required: true,
       min_value: 1,
@@ -25,7 +29,7 @@ export const DICE_COMMAND = {
     },
     {
       type: 4,
-      name: 'sides',
+      name: DICE_CONFIG.sidesOption,
       description: DICE_CONFIG.sidesOptionDescription,
       required: true,
       min_value: 2,
