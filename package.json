@@ -7,13 +7,14 @@
   "main": "src/server.js",
   "scripts": {
     "start": "wrangler dev",
+    "tunnel": "cloudflared tunnel --url http://localhost:8787 --no-autoupdate",
     "ngrok": "ngrok http 8787",
     "test": "c8 mocha test",
     "fix": "eslint --fix '**/*.js'",
     "lint": "eslint '**/*.js'",
     "register": "node src/register.js",
-    "publish": "wrangler deploy",
-    "tunnel": "cloudflared tunnel --url http://localhost:8787 --no-autoupdate"
+    "deploy": "wrangler deploy",
+    "publish": "npm run register && npm run deploy"
   },
   "keywords": [],
   "author": "Justin Beckwith <justin.beckwith@gmail.com>",
