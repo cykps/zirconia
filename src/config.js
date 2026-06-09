@@ -32,6 +32,7 @@ export const JANKEN_CONFIG = {
 };
 
 export const SIMPLE_REPLY_CONFIG = {
+  enable: true,
   replies: [
     { name: 'hallo', description: 'general reply', message: 'hallo' },
     {
@@ -43,6 +44,7 @@ export const SIMPLE_REPLY_CONFIG = {
 };
 
 export const GACHA_CONFIG = {
+  enable: true,
   gachas: [
     {
       name: 'omikuji',

@@ -4,7 +4,12 @@ import {
   get_gacha_commands,
   get_simple_reply_commands,
 } from './commands.js';
-import { JANKEN_CONFIG, DICE_CONFIG } from './config.js';
+import {
+  JANKEN_CONFIG,
+  DICE_CONFIG,
+  SIMPLE_REPLY_CONFIG,
+  GACHA_CONFIG,
+} from './config.js';
 import dotenv from 'dotenv';
 import process from 'node:process';
 
@@ -15,7 +20,6 @@ import process from 'node:process';
  */
 
 dotenv.config({ path: '.dev.vars' });
-
 const token = process.env.DISCORD_TOKEN;
 const applicationId = process.env.DISCORD_APPLICATION_ID;
 
@@ -28,13 +32,13 @@ if (!applicationId) {
   );
 }
 
-/**
- * Register all commands globally.  This can take o(minutes), so wait until
- * you're sure these are the commands you want.
- */
-const url = `https://discord.com/api/v10/applications/${applicationId}/commands`;
-
-const commands = [...get_simple_reply_commands(), ...get_gacha_commands()];
+const commands = [];
+if (SIMPLE_REPLY_CONFIG.enable) {
+  commands.push(get_simple_reply_commands());
+}
+if (GACHA_CONFIG.enable) {
+  commands.push(get_gacha_commands());
+}
 if (JANKEN_CONFIG.enable) {
   commands.push(JANKEN_COMMAND);
 }
@@ -42,6 +46,7 @@ if (DICE_CONFIG.enable) {
   commands.push(DICE_COMMAND);
 }
 
+const url = `https://discord.com/api/v10/applications/${applicationId}/commands`;
 const response = await fetch(url, {
   headers: {
     'Content-Type': 'application/json',
