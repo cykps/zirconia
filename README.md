@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="./assets/icon.ink.svg" alt="icon">
+</p>
+
 # Zirconia
 
 スラッシュコマンドへのシンプルな返答、じゃんけん、ダイス、ガチャ機能を備えたDiscordボットです
