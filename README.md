@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="./assets/icon.ink.svg" alt="icon">
+  <img src="./assets/icon-rounded-coner.ink.svg" width="200" alt="icon" style="border-radius: 20%;">
 </p>
 
 # Zirconia
