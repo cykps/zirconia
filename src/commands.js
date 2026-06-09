@@ -40,12 +40,12 @@ export const DICE_COMMAND = {
 
 export function get_simple_reply_commands() {
   return SIMPLE_REPLY_CONFIG.replies.map(({ name, description, options }) => {
-    return { name: name, description: description, options: options };
+    return { name, description, options };
   });
 }
 
 export function get_gacha_commands() {
   return GACHA_CONFIG.gachas.map(({ name, description }) => {
-    return { name: name, description: description };
+    return { name, description };
   });
 }
