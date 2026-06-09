@@ -1,7 +1,7 @@
 {
   "name": "zirconiabot",
   "version": "1.0.0",
-  "description": "A simple discord bot that uses intents to post pictures from r/aww",
+  "description": "A Discord bot with simple repliesm janken, dice and gacha commands",
   "type": "module",
   "private": true,
   "main": "src/server.js",
@@ -14,10 +14,10 @@
     "lint": "eslint '**/*.js'",
     "register": "node src/register.js",
     "deploy": "wrangler deploy",
-    "publish": "npm run register && npm run deploy"
+    "deploy:full": "npm run register && npm run deploy"
   },
   "keywords": [],
-  "author": "Justin Beckwith <justin.beckwith@gmail.com>",
+  "author": "Merucu",
   "license": "MIT",
   "dependencies": {
     "discord-interactions": "^4.0.0",

@@ -67,7 +67,7 @@ DISCORD_APPLICATION_ID="141320486770036847239"
 
 ### 3. 手動でCloudflare Workersにデプロイ
 - **3.1** 以下のコマンドを実行
-  - `npm run publish`
+  - `npm run deploy:full`
 - **3.2** 表示されたURL(`https://{Worker名}.{アカウント名}.workers.dev`という形式)を、*2.4*の手順でDiscordアプリケーションに登録 (初回のみ)
 - **3.3** Discordでスラッシュコマンドなどを使用し、ボットが正常に動作することを確認
 - *参考: [公式ドキュメント](https://docs.discord.com/developers/tutorials/hosting-on-cloudflare-workers#deployment)*
