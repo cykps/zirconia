@@ -35,11 +35,12 @@ export function handleJankenCommand(interaction) {
   const startMessage = generateMessage(CONFIG.messages.start, {
     interaction: interaction,
   });
+  const round = 1;
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
       content: startMessage,
-      components: createHandButtons(userId),
+      components: createHandButtons(userId, round),
     },
   };
 }
@@ -54,7 +55,7 @@ export function handleJankenButton(interaction) {
     });
     return createEphemeralResponse(errorMessage);
   }
-  const { ownerId, hand } = parsedCustomId;
+  const { ownerId, round, hand } = parsedCustomId;
 
   // じゃんけんを始めた人とボタンを押した人の同一性チェック
   const clickedUserId = interaction.member.user.id;
@@ -88,7 +89,7 @@ export function handleJankenButton(interaction) {
       type: InteractionResponseType.UPDATE_MESSAGE,
       data: {
         content: `${interaction.message.content}\n${resultMessage}\n${drawMessage}`,
-        components: createHandButtons(ownerId),
+        components: createHandButtons(ownerId, round + 1),
       },
     };
   }
@@ -110,24 +111,24 @@ export function handleJankenButton(interaction) {
   };
 }
 
-function createHandButtons(userId) {
+function createHandButtons(userId, round) {
   return [
     {
       type: 1,
       components: [
-        createHandButton('rock', userId),
-        createHandButton('scissors', userId),
-        createHandButton('paper', userId),
+        createHandButton(userId, round, 'rock'),
+        createHandButton(userId, round, 'scissors'),
+        createHandButton(userId, round, 'paper'),
       ],
     },
   ];
 }
 
-function createHandButton(handId, userId) {
+function createHandButton(userId, round, handId) {
   const hand = HANDS[handId];
   return {
     type: 2,
-    custom_id: `janken:${userId}:${handId}`,
+    custom_id: `janken:${userId}:${round}:${handId}`,
     label: hand.name,
     emoji: { name: hand.normalizedEmoji },
     style: 1,
@@ -136,19 +137,22 @@ function createHandButton(handId, userId) {
 
 function parseHandCustomId(customId) {
   const parts = customId.split(':');
-  if (parts.length !== 3) {
+  if (parts.length !== 4) {
     return null;
   }
 
-  const [prefix, ownerId, hand] = parts;
+  const [prefix, ownerId, round, hand] = parts;
   if (prefix !== 'janken') {
+    return null;
+  }
+  if (typeof round !== 'number') {
     return null;
   }
   if (!(hand in HANDS)) {
     return null;
   }
 
-  return { ownerId, hand };
+  return { ownerId, round, hand };
 }
 
 // 勝敗判定用関数
