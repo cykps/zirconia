@@ -2,6 +2,10 @@ name = "zirconiabot"
 main = "./src/server.js"
 compatibility_date="2023-05-18"
 
+[observability.logs]
+enabled = true
+invocation_logs = true
+
 # [secrets]
 # DISCORD_TOKEN
 # DISCORD_PUBLIC_KEY
