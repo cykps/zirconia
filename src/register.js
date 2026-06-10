@@ -34,10 +34,10 @@ if (!applicationId) {
 
 const commands = [];
 if (SIMPLE_REPLY_CONFIG.enable) {
-  commands.push(get_simple_reply_commands());
+  commands.push(...get_simple_reply_commands());
 }
 if (GACHA_CONFIG.enable) {
-  commands.push(get_gacha_commands());
+  commands.push(...get_gacha_commands());
 }
 if (JANKEN_CONFIG.enable) {
   commands.push(JANKEN_COMMAND);
@@ -57,7 +57,7 @@ const response = await fetch(url, {
 });
 
 if (response.ok) {
-  console.log('Registered all commands');
+  console.info('Registered all commands');
   const data = await response.json();
   console.log(JSON.stringify(data, null, 2));
 } else {
