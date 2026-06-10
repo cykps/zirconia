@@ -28,7 +28,7 @@ export const JANKEN_CONFIG = {
     invalidButton: '不正なボタンです',
   },
 
-  // maxMatches: 3, //todo
+  maxRound: 3,
 };
 
 export const SIMPLE_REPLY_CONFIG = {

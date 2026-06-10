@@ -68,8 +68,7 @@ export function handleJankenButton(interaction) {
 
   // 勝敗判定
   const userHand = HANDS[hand];
-  const botHand = HANDS_LIST[Math.floor(Math.random() * 3)];
-  const result = judge(userHand, botHand);
+  const { botHand, result } = play(userHand, round, CONFIG.maxRound);
 
   // メッセージ生成
   const resultMessage = generateMessage(CONFIG.messages.result, {
@@ -145,7 +144,8 @@ function parseHandCustomId(customId) {
   if (prefix !== 'janken') {
     return null;
   }
-  if (typeof round !== 'number') {
+  const roundCount = Number(round);
+  if (isNaN(roundCount)) {
     return null;
   }
   if (!(hand in HANDS)) {
@@ -161,4 +161,17 @@ function judge(userHand, botHand) {
   // 0: あいこ
   // 1: Botの勝ち
   // 2: ユーザーの勝ち
+}
+
+function play(userHand, round, maxRound) {
+  let botHand;
+  if (maxRound < 0 || round < maxRound) {
+    botHand = HANDS_LIST[Math.floor(Math.random() * 3)];
+  } else {
+    botHand =
+      HANDS_LIST[(userHand.value + 1 + Math.floor(Math.random() * 2)) % 3];
+  }
+
+  const result = judge(userHand, botHand);
+  return { botHand, result };
 }
