@@ -37,14 +37,6 @@ DISCORD_PUBLIC_KEY="8ad013a56d5b1225675dad1a6ecc72ed2c8788465e4fa3bb8555e"
 DISCORD_APPLICATION_ID="141320486770036847239"
 ```
 
-- **1.3** wranglerでDiscordのsecretsを保存
-  - *1.1*で取得したトークン、パブリックキー、アプリケーションIDをそれぞれ以下のコマンドでwranglerに登録
-  - (`wrangler`の初回実行時はブラウザを使った認証が行われる)
-    - トークン: `wrangler secret put DISCORD_TOKEN`
-    - パブリックキー: `wrangler secret put DISCORD_PUBLIC_KEY`
-    - アプリケーションID: `wrangler secret put DISCORD_APPLICATION_ID`
-  - *参考: [公式ドキュメント](https://docs.discord.com/developers/tutorials/hosting-on-cloudflare-workers#storing-secrets)*
-
 ### 2. ローカル環境で動作確認をする
 - **2.1** 依存関係のインストールのため、以下のコマンドを実行 (初回のみ)
   - `npm install`
@@ -66,10 +58,20 @@ DISCORD_APPLICATION_ID="141320486770036847239"
 - *参考: [公式ドキュメント](https://docs.discord.com/developers/tutorials/hosting-on-cloudflare-workers#running-locally)*
 
 ### 3. 手動でCloudflare Workersにデプロイ
-- **3.1** 以下のコマンドを実行
-  - `npm run deploy:full`
-- **3.2** 表示されたURL(`https://{Worker名}.{アカウント名}.workers.dev`という形式)を、*2.4*の手順でDiscordアプリケーションに登録 (初回のみ)
-- **3.3** Discordでスラッシュコマンドなどを使用し、ボットが正常に動作することを確認
+
+- **3.1** wranglerでDiscordのsecretsを保存
+  - *1.1*で取得したトークン、パブリックキー、アプリケーションIDをそれぞれ以下のコマンドでwranglerに登録
+  - (`wrangler`の初回実行時はブラウザを使った認証が行われる)
+    - トークン: `wrangler secret put DISCORD_TOKEN`
+    - パブリックキー: `wrangler secret put DISCORD_PUBLIC_KEY`
+    - アプリケーションID: `wrangler secret put DISCORD_APPLICATION_ID`
+  - *参考: [公式ドキュメント](https://docs.discord.com/developers/tutorials/hosting-on-cloudflare-workers#storing-secrets)*
+- **3.2** Discordへのスラッシュコマンドの登録とCloudflare Workersへのデプロイ
+  - 以下のコマンドを実行
+      - `npm run deploy:full`
+      - Workersを新規作成するか問われるため、作成を承認する (初回のみ)
+- **3.3** 表示されたURL(`https://{Worker名}.{アカウント名}.workers.dev`という形式)を、*2.4*の手順でDiscordアプリケーションに登録 (初回のみ)
+- **3.4** Discordでスラッシュコマンドなどを使用し、ボットが正常に動作することを確認
 - *参考: [公式ドキュメント](https://docs.discord.com/developers/tutorials/hosting-on-cloudflare-workers#deployment)*
 
 ### 4. GitHub Actions経由でCloudflare Workersにデプロイ (オプション)
