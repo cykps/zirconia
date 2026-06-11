@@ -12,7 +12,10 @@ export const GACHAS = Object.fromEntries(
 export function gacha(commandName, interaction) {
   const gacha = GACHAS[commandName];
   if (gacha.totalWeight <= 0) {
-    return createEphemeralResponse(CONFIG.messages.invalidWeight);
+    const errorMessage = generateMessage(CONFIG.messages.invalidWeight, {
+      interaction,
+    });
+    return createEphemeralResponse(errorMessages);
   }
   const drawnChoice = drawChoice(gacha);
   const message = generateMessage(drawnChoice.message, {

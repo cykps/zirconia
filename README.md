@@ -19,7 +19,7 @@
 
 ### 1. Discord・Cloudflareの設定
 - **1.1**  Discordボット用のアプリケーションの作成・ボットのサーバーへ追加
-  - [公式ドキュメント](https://docs.discord.com/developers/tutorials/hosting-on-cloudflare-workers#creating-an-app-on-discord)の`Creating an app on Discord`, `Adding bot permissions`に従い、ボット用のアプリケーションを作成、ボットをサーバーへ追加する
+  - [公式ドキュメント](https://docs.discord.com/developers/tutorials/hosting-on-cloudflare-workers#creating-an-app-on-discord)の`Creating an app on Discord`、`Adding bot permissions`に従い、ボット用のアプリケーションを作成、ボットをサーバーへ追加する
 - **1.2** `.dev.vars`にsecrets(機密情報)を保存 
   - **1.2.1** プロジェクトのルート(`package.json`や`.gitignore`と同じ階層)に`.dev.vars`という名前のファイルを作成
   - **1.2.2** `.dev.vars`に以下の形式でsecretsを保存
@@ -117,6 +117,120 @@ DISCORD_APPLICATION_ID="141320486770036847239"
 - **4.5** WorkerのURL(`https://{Worker名}.{アカウント名}.workers.dev`という形式)を、*2.4*の手順でDiscordアプリケーションに登録
 - **4.6** Discordでスラッシュコマンドなどを使用し、ボットが正常に動作することを確認
 - *参考: [公式ドキュメント](https://docs.discord.com/developers/tutorials/hosting-on-cloudflare-workers#deployment)*
+
+## 設定
+
+各機能の設定は`src/config.js`で変更できます。各設定の`enable`を`false`にすると、その機能を無効化できます。
+
+### 表示メッセージの形式
+
+表示メッセージには、テキスト、配列、関数を指定できます。これらの値は`generateMessage(formatter, props)`で次のように処理されます。
+
+| 指定する値 | 挙動 |
+|--------|--------|
+| テキスト | 指定したテキストをそのまま表示 |
+| 配列 | 配列内の要素を1つランダムに選んで表示。要素にはテキスト、配列、関数を指定可能 |
+| 関数 | メッセージ生成時の値を引数として受け取り、関数が返したテキストを表示 |
+
+たとえば、固定メッセージは`message: 'hallo'`、ランダムなメッセージは`message: ['表', '裏']`のように設定します。関数を使うと、実行結果に応じたメッセージを生成できます。
+
+```js
+message: ({ interaction }) => {
+  return `${interaction.member.user.username}さん、こんにちは`;
+},
+```
+
+テキスト、配列、関数を指定できる設定項目は次のとおりです。
+
+| 設定 | 対応する項目 |
+|--------|--------|
+| `SIMPLE_REPLY_CONFIG` | `replies[].message` |
+| `JANKEN_CONFIG` | `messages.start`、`messages.result`、`messages.draw`、`messages.botWin`、`messages.userWin`、`messages.notGameOwner`、`messages.invalidButton` |
+| `DICE_CONFIG` | `messages.result`、`messages.invalidOption` |
+| `GACHA_CONFIG` | `gachas[].choices[].message`、`messages.invalidWeight` |
+
+
+関数を指定した場合、項目ごとに次の値を引数のオブジェクトから参照できます。
+
+| 対応する項目 | 参照できる値 |
+|--------|--------|
+| `SIMPLE_REPLY_CONFIG.replies[].message` | `interaction` |
+| `JANKEN_CONFIG.messages.start`、`messages.invalidButton`、`messages.notGameOwner` | `interaction` |
+| `JANKEN_CONFIG.messages.result`、`messages.draw`、`messages.botWin`、`messages.userWin` | `userHand`、`botHand`、`interaction` |
+| `DICE_CONFIG.messages.result` | `rolls`、`areRollsTruncated`、`total`、`diceCount`、`diceSides`、`rollsRaw` |
+| `DICE_CONFIG.messages.invalidOption` | `interaction` |
+| `GACHA_CONFIG.gachas[].choices[].message` | `interaction`、`gacha`、`drawnChoice` |
+| `GACHA_CONFIG.messages.invalidWeight` | `interaction` |
+
+
+### SIMPLE_REPLY_CONFIG
+
+スラッシュコマンドに対して、固定メッセージまたはランダムなメッセージを返す機能の設定です。
+
+| 項目 | 説明 |
+|--------|--------|
+| enable | 機能の有効・無効 |
+| replies | コマンドと返答の定義 |
+
+`replies`の各要素には、以下の項目を設定します。
+
+| 項目 | 説明 |
+|--------|--------|
+| name | コマンド名 |
+| description | コマンドの説明 |
+| message | 表示メッセージ。テキスト、配列、関数を指定可能 |
+
+### JANKEN_CONFIG
+
+じゃんけん機能の設定です。
+
+| 項目 | 説明 |
+|--------|--------|
+| enable | 機能の有効・無効 |
+| commandName | コマンド名 |
+| description | コマンドの説明 |
+| hands | 手の定義 |
+| messages | 表示メッセージ。各項目にはテキスト、配列、関数を指定可能 |
+| maxRound | あいこの最大ラウンド数 |
+
+### DICE_CONFIG
+
+さいころ機能の設定です。
+
+| 項目 | 説明 |
+|--------|--------|
+| enable | 機能の有効・無効 |
+| commandName | コマンド名 |
+| description | コマンドの説明 |
+| countOption | さいころの個数を指定するオプション名 |
+| countOptionDescription | さいころの個数を指定するオプションの説明 |
+| maxDiceCount | 一度に振れるさいころの最大個数 |
+| sidesOption | さいころの面数を指定するオプション名 |
+| sidesOptionDescription | さいころの面数を指定するオプションの説明 |
+| maxDiceSides | 指定できるさいころの最大面数 |
+| maxVisibleRolls | メッセージに表示する出目の最大数 |
+| messages | 表示メッセージ。各項目にはテキスト、配列、関数を指定可能 |
+
+### GACHA_CONFIG
+
+ガチャ機能の設定です。
+
+| 項目 | 説明 |
+|--------|--------|
+| enable | 機能の有効・無効 |
+| gachas | ガチャの定義 |
+| messages | 表示メッセージ。各項目にはテキスト、配列、関数を指定可能 |
+
+`gachas`の各要素には、以下の項目を設定します。
+
+| 項目 | 説明 |
+|--------|--------|
+| name | コマンド名 |
+| description | コマンドの説明 |
+| choices | 抽選する選択肢の定義 |
+
+`choices`の各要素には、表示する`message`と抽選時の重みとなる正の整数`weight`を設定します。`weight`が大きいほど出やすくなります。例えば`weight: 10`は`weight: 2`の5倍出やすくなります。
+`message`にはテキスト、配列、関数を指定できます。
 
 ## リンク
 ### ドキュメント
