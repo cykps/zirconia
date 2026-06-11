@@ -37,7 +37,7 @@ const HANDS_LIST = [HANDS.rock, HANDS.paper, HANDS.scissors];
 export function handleJankenCommand(interaction) {
   const userId = interaction.member.user.id;
   const startMessage = generateMessage(CONFIG.messages.start, {
-    interaction: interaction,
+    interaction,
   });
   const round = 1;
   return {
@@ -55,7 +55,7 @@ export function handleJankenButton(interaction) {
   const parsedCustomId = parseHandCustomId(interaction.data.custom_id);
   if (parsedCustomId === null) {
     const errorMessage = generateMessage(CONFIG.messages.invalidButton, {
-      interaction: interaction,
+      interaction,
     });
     return createEphemeralResponse(errorMessage);
   }
@@ -65,7 +65,7 @@ export function handleJankenButton(interaction) {
   const clickedUserId = interaction.member.user.id;
   if (clickedUserId !== ownerId) {
     const errorMessage = generateMessage(CONFIG.messages.notGameOwner, {
-      interaction: interaction,
+      interaction,
     });
     return createEphemeralResponse(errorMessage);
   }
@@ -76,17 +76,17 @@ export function handleJankenButton(interaction) {
 
   // メッセージ生成
   const resultMessage = generateMessage(CONFIG.messages.result, {
-    userHand: userHand,
-    botHand: botHand,
-    interaction: interaction,
+    userHand,
+    botHand,
+    interaction,
   });
 
   //// あいこの場合
   if (result === 0) {
     const drawMessage = generateMessage(CONFIG.messages.draw, {
-      userHand: userHand,
-      botHand: botHand,
-      interaction: interaction,
+      userHand,
+      botHand,
+      interaction,
     });
     return {
       type: InteractionResponseType.UPDATE_MESSAGE,
@@ -101,9 +101,9 @@ export function handleJankenButton(interaction) {
   const formatter =
     result === 1 ? CONFIG.messages.botWin : CONFIG.messages.userWin;
   const message = generateMessage(formatter, {
-    userHand: userHand,
-    botHand: botHand,
-    interaction: interaction,
+    userHand,
+    botHand,
+    interaction,
   });
   return {
     type: InteractionResponseType.UPDATE_MESSAGE,

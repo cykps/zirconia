@@ -19,9 +19,9 @@ export function gacha(commandName, interaction) {
   }
   const drawnChoice = drawChoice(gacha);
   const message = generateMessage(drawnChoice.message, {
-    interaction: interaction,
-    gacha: gacha,
-    drawnChoice: drawnChoice,
+    interaction,
+    gacha,
+    drawnChoice,
   });
 
   return {

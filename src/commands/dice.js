@@ -16,7 +16,7 @@ export function dice(interaction) {
 
   if (typeof diceCount !== 'number' || typeof diceSides !== 'number') {
     const errorMessage = generateMessage(CONFIG.messages.invalidOption, {
-      interaction: interaction,
+      interaction,
     });
     return createEphemeralResponse(errorMessage);
   }
@@ -34,11 +34,12 @@ export function dice(interaction) {
   // メッセージ生成
   const message = generateMessage(CONFIG.messages.result, {
     rolls: truncatedRolls,
-    areRollsTruncated: areRollsTruncated,
-    total: total,
-    diceCount: diceCount,
-    diceSides: diceSides,
+    areRollsTruncated,
+    total,
+    diceCount,
+    diceSides,
     rollsRaw: rolls,
+    interaction,
   });
 
   return {
