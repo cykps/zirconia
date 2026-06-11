@@ -1,7 +1,7 @@
 {
   "name": "zirconiabot",
   "version": "1.0.0",
-  "description": "A Discord bot with simple replies janken, dice and gacha commands",
+  "description": "A Discord bot with simple repliy, janken, dice and gacha commands",
   "type": "module",
   "private": true,
   "main": "src/server.js",

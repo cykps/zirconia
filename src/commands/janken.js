@@ -36,13 +36,10 @@ const HANDS_LIST = [HANDS.rock, HANDS.paper, HANDS.scissors];
 // `/janken`コマンドのハンドル関数
 export function handleJankenCommand(interaction) {
   const userId = interaction.member.user.id;
-  console.log(1);
   const startMessage = generateMessage(CONFIG.messages.start, {
     interaction: interaction,
   });
-  console.log(1.5);
   const round = 1;
-  console.log(2);
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
