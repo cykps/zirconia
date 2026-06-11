@@ -157,7 +157,7 @@ message: ({ interaction }) => {
 | `SIMPLE_REPLY_CONFIG.replies[].message` | `interaction` |
 | `JANKEN_CONFIG.messages.start`、`messages.invalidButton`、`messages.notGameOwner` | `interaction` |
 | `JANKEN_CONFIG.messages.result`、`messages.draw`、`messages.botWin`、`messages.userWin` | `userHand`、`botHand`、`interaction` |
-| `DICE_CONFIG.messages.result` | `rolls`、`areRollsTruncated`、`total`、`diceCount`、`diceSides`、`rollsRaw` |
+| `DICE_CONFIG.messages.result` | `rolls`、`areRollsTruncated`、`total`、`diceCount`、`diceSides`、`rollsRaw`、`interaction` |
 | `DICE_CONFIG.messages.invalidOption` | `interaction` |
 | `GACHA_CONFIG.gachas[].choices[].message` | `interaction`、`gacha`、`drawnChoice` |
 | `GACHA_CONFIG.messages.invalidWeight` | `interaction` |
