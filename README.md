@@ -191,7 +191,7 @@ message: ({ interaction }) => {
 | description | コマンドの説明 |
 | hands | 手の定義 |
 | messages | 表示メッセージ。各項目にはテキスト、配列、関数を指定可能 |
-| maxRound | あいこの最大ラウンド数 |
+| maxRound | 最大ラウンド数 |
 
 ### DICE_CONFIG
 
