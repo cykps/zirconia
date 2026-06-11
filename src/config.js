@@ -1,3 +1,15 @@
+export const SIMPLE_REPLY_CONFIG = {
+  enable: true,
+  replies: [
+    { name: 'hallo', description: 'general reply', message: 'hallo' },
+    {
+      name: 'coin',
+      description: '🪙コイントス',
+      message: ['表', '裏'],
+    },
+  ],
+};
+
 export const JANKEN_CONFIG = {
   enable: true,
 
@@ -31,41 +43,6 @@ export const JANKEN_CONFIG = {
   maxRound: 3,
 };
 
-export const SIMPLE_REPLY_CONFIG = {
-  enable: true,
-  replies: [
-    { name: 'hallo', description: 'general reply', message: 'hallo' },
-    {
-      name: 'coin',
-      description: '🪙コイントス',
-      message: ['表', '裏'],
-    },
-  ],
-};
-
-export const GACHA_CONFIG = {
-  enable: true,
-  gachas: [
-    {
-      name: 'omikuji',
-      description: '🥠おみくじ',
-      choices: [
-        { message: '大吉', weight: 3 },
-        { message: '吉', weight: 10 },
-        { message: '中吉', weight: 9 },
-        { message: '小吉', weight: 8 },
-        { message: '末吉', weight: 7 },
-        { message: '凶', weight: 2 },
-      ],
-    },
-  ],
-
-  messages: {
-    invalidWeight:
-      '不正なガチャ設定です ウェイトの合計は正の整数となる必要があります',
-  },
-};
-
 export const DICE_CONFIG = {
   enable: true,
 
@@ -93,5 +70,28 @@ export const DICE_CONFIG = {
     },
 
     invalidOption: '不正なオプションです',
+  },
+};
+
+export const GACHA_CONFIG = {
+  enable: true,
+  gachas: [
+    {
+      name: 'omikuji',
+      description: '🥠おみくじ',
+      choices: [
+        { message: '大吉', weight: 3 },
+        { message: '吉', weight: 10 },
+        { message: '中吉', weight: 9 },
+        { message: '小吉', weight: 8 },
+        { message: '末吉', weight: 7 },
+        { message: '凶', weight: 2 },
+      ],
+    },
+  ],
+
+  messages: {
+    invalidWeight:
+      '不正なガチャ設定です ウェイトの合計は正の整数となる必要があります',
   },
 };
