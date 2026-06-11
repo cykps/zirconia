@@ -15,7 +15,7 @@ export function gacha(commandName, interaction) {
     const errorMessage = generateMessage(CONFIG.messages.invalidWeight, {
       interaction,
     });
-    return createEphemeralResponse(errorMessages);
+    return createEphemeralResponse(errorMessage);
   }
   const drawnChoice = drawChoice(gacha);
   const message = generateMessage(drawnChoice.message, {
