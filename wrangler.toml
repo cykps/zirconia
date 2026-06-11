@@ -1,6 +1,6 @@
 name = "zirconiabot"
 main = "./src/server.js"
-compatibility_date="2023-05-18"
+compatibility_date="2026-06-08"
 
 [observability.logs]
 enabled = true

@@ -6,8 +6,9 @@ import {
 } from '../utils.js';
 import { InteractionResponseType } from 'discord-interactions';
 
+// `/dice`コマンドのハンドル関数
 export function dice(interaction) {
-  // ndn オプションの解釈
+  // オプションの解釈
   const countOption = getOption(interaction, CONFIG.countOption);
   const sidesOption = getOption(interaction, CONFIG.sidesOption);
   const diceCount = countOption?.value;
@@ -48,6 +49,7 @@ export function dice(interaction) {
   };
 }
 
+// `sides`面のダイスを`count`個ふる関数
 function rollDiceMany(count, sides) {
   const results = [];
   for (let i = 0; i < count; i++) {
@@ -56,10 +58,12 @@ function rollDiceMany(count, sides) {
   return results;
 }
 
+// `sides`面のダイスをふる関数
 function rollDie(sides) {
   return Math.floor(Math.random() * sides) + 1;
 }
 
+// 出目の合計を求める関数
 function calculateTotal(rolls) {
   return rolls.reduce((sum, roll) => sum + roll, 0);
 }

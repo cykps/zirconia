@@ -1,4 +1,8 @@
-import { InteractionResponseType } from 'discord-interactions';
+import {
+  InteractionResponseType,
+  MessageComponentTypes,
+  ButtonStyleTypes,
+} from 'discord-interactions';
 import { JANKEN_CONFIG as CONFIG } from '../config.js';
 import {
   createEphemeralResponse,
@@ -29,13 +33,16 @@ const HANDS = {
 };
 const HANDS_LIST = [HANDS.rock, HANDS.paper, HANDS.scissors];
 
-// `/janken` コマンドが実行されたときに呼び出される関数
+// `/janken`コマンドのハンドル関数
 export function handleJankenCommand(interaction) {
   const userId = interaction.member.user.id;
+  console.log(1);
   const startMessage = generateMessage(CONFIG.messages.start, {
     interaction: interaction,
   });
+  console.log(1.5);
   const round = 1;
+  console.log(2);
   return {
     type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
     data: {
@@ -68,7 +75,7 @@ export function handleJankenButton(interaction) {
 
   // 勝敗判定
   const userHand = HANDS[hand];
-  const { botHand, result } = play(userHand, round, CONFIG.maxRound);
+  const { botHand, result } = playRound(userHand, round, CONFIG.maxRound);
 
   // メッセージ生成
   const resultMessage = generateMessage(CONFIG.messages.result, {
@@ -110,10 +117,11 @@ export function handleJankenButton(interaction) {
   };
 }
 
+// ボタンの生成関数
 function createHandButtons(userId, round) {
   return [
     {
-      type: 1,
+      type: MessageComponentTypes.ACTION_ROW,
       components: [
         createHandButton(userId, round, 'rock'),
         createHandButton(userId, round, 'scissors'),
@@ -126,14 +134,15 @@ function createHandButtons(userId, round) {
 function createHandButton(userId, round, handId) {
   const hand = HANDS[handId];
   return {
-    type: 2,
+    type: MessageComponentTypes.BUTTON,
     custom_id: `janken:${userId}:${round}:${handId}`,
     label: hand.name,
     emoji: { name: hand.normalizedEmoji },
-    style: 1,
+    style: ButtonStyleTypes.PRIMARY,
   };
 }
 
+// ボタンのカスタムIDのパース用関数
 function parseHandCustomId(customId) {
   const parts = customId.split(':');
   if (parts.length !== 4) {
@@ -145,14 +154,14 @@ function parseHandCustomId(customId) {
     return null;
   }
   const roundCount = Number(round);
-  if (isNaN(roundCount)) {
+  if (!Number.isInteger(roundCount)) {
     return null;
   }
   if (!(hand in HANDS)) {
     return null;
   }
 
-  return { ownerId, round, hand };
+  return { ownerId, round: roundCount, hand };
 }
 
 // 勝敗判定用関数
@@ -163,7 +172,7 @@ function judge(userHand, botHand) {
   // 2: ユーザーの勝ち
 }
 
-function play(userHand, round, maxRound) {
+function playRound(userHand, round, maxRound) {
   let botHand;
   if (maxRound < 0 || round < maxRound) {
     botHand = HANDS_LIST[Math.floor(Math.random() * 3)];

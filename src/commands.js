@@ -3,6 +3,7 @@
  * and registration.
  */
 
+import { ApplicationCommandOptionType } from 'discord-api-types/v10';
 import {
   SIMPLE_REPLY_CONFIG,
   GACHA_CONFIG,
@@ -20,7 +21,7 @@ export const DICE_COMMAND = {
   description: DICE_CONFIG.description,
   options: [
     {
-      type: 4,
+      type: ApplicationCommandOptionType.Integer,
       name: DICE_CONFIG.countOption,
       description: DICE_CONFIG.countOptionDescription,
       required: true,
@@ -28,7 +29,7 @@ export const DICE_COMMAND = {
       max_value: DICE_CONFIG.maxDiceCount,
     },
     {
-      type: 4,
+      type: ApplicationCommandOptionType.Integer,
       name: DICE_CONFIG.sidesOption,
       description: DICE_CONFIG.sidesOptionDescription,
       required: true,
@@ -38,13 +39,13 @@ export const DICE_COMMAND = {
   ],
 };
 
-export function get_simple_reply_commands() {
+export function getSimpleReplyCommands() {
   return SIMPLE_REPLY_CONFIG.replies.map(({ name, description, options }) => {
     return { name, description, options };
   });
 }
 
-export function get_gacha_commands() {
+export function getGachaCommands() {
   return GACHA_CONFIG.gachas.map(({ name, description }) => {
     return { name, description };
   });

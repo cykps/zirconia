@@ -59,6 +59,9 @@ export const GACHA_CONFIG = {
       ],
     },
   ],
+
+  invalidWeight:
+    '不正なガチャ設定です ウェイトの合計は正の整数となる必要があります',
 };
 
 export const DICE_CONFIG = {

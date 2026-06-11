@@ -1,8 +1,8 @@
 import {
   JANKEN_COMMAND,
   DICE_COMMAND,
-  get_gacha_commands,
-  get_simple_reply_commands,
+  getGachaCommands,
+  getSimpleReplyCommands,
 } from './commands.js';
 import {
   JANKEN_CONFIG,
@@ -34,10 +34,10 @@ if (!applicationId) {
 
 const commands = [];
 if (SIMPLE_REPLY_CONFIG.enable) {
-  commands.push(...get_simple_reply_commands());
+  commands.push(...getSimpleReplyCommands());
 }
 if (GACHA_CONFIG.enable) {
-  commands.push(...get_gacha_commands());
+  commands.push(...getGachaCommands());
 }
 if (JANKEN_CONFIG.enable) {
   commands.push(JANKEN_COMMAND);

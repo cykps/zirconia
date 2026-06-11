@@ -8,6 +8,7 @@ export const SIMPLE_REPLIES = Object.fromEntries(
   }),
 );
 
+// スラッシュコマンドのハンドル関数
 export function simpleReply(commandName, interaction) {
   const message = generateMessage(SIMPLE_REPLIES[commandName].message, {
     interaction: interaction,
