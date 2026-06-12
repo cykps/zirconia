@@ -13,9 +13,7 @@
 - [Cloudflare](https://www.cloudflare.com/)アカウント
 - [Node.js](https://nodejs.org/ja/download)のインストール
 - [wrangler](https://developers.cloudflare.com/workers/wrangler/install-and-update/)のインストール
-- ローカル環境で動作確認する場合、次のいずれか:
-  - [cloudflared](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/)のインストール (Cloudflare Tunnelでトンネルする場合) 🌟おすすめ
-  - [ngrok](https://ngrok.com/)アカウント (ngrokでトンネルする場合)
+- ローカル環境で動作確認する場合、[cloudflared](https://developers.cloudflare.com/cloudflare-one/networks/connectors/cloudflare-tunnel/downloads/)のインストール
 
 ### 1. Discord・Cloudflareの設定
 - **1.1**  Discordボット用のアプリケーションの作成・ボットのサーバーへ追加
@@ -44,12 +42,8 @@ DISCORD_APPLICATION_ID="141320486770036847239"
   - `npm run start`
 - **2.3** HTTPトンネルを起動
   - ローカルで動いているボットサーバーにDiscordからアクセスできるようにするため、HTTPトンネルを使用
-  - 方法1: `cloudflared`を使用する場合
-    - *2.2*とは別のシェルで `npm run tunnel` を実行
-    - 表示されるURLをコピーしておく
-  - 方法2: `ngrok`を使用する場合
-    - *2.2*とは別のシェルで `npm run ngrok` を実行
-    - 表示されるURLをコピーしておく
+  - *2.2*とは別のシェルで `npm run tunnel` を実行
+  - 表示されるURLをコピーしておく
 - **2.4** DiscordアプリケーションにURLを登録
   - **2.4.1** [My Applications | Discord Developer Portal](https://discord.com/developers/applications)から、*1.1*で作成したアプリケーションを選択
   - **2.4.2** `Interactions Endpoint URL`に*2.3*で表示されたURLをコピペする
