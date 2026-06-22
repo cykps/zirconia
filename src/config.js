@@ -1,7 +1,7 @@
 export const SIMPLE_REPLY_CONFIG = {
   enable: true,
   replies: [
-    { name: 'hallo', description: 'general reply', message: 'hallo' },
+    { name: 'hello', description: '💬general reply', message: 'hello' },
     {
       name: 'coin',
       description: '🪙コイントス',
@@ -29,15 +29,17 @@ export const JANKEN_CONFIG = {
         interaction.message.content.endsWith('じゃんけん...');
       return [
         `${isFirstMatch ? 'ぽん！' : 'しょ！'}${botHand.emoji}`,
-        `\`${userHand.emoji}${userHand.name}を出したよ\``,
+        `\`${userHand.emoji}${userHand.name}\``,
       ].join('\n');
     },
     draw: 'あいこで...',
-    botWin: ['Bot の勝ち！', 'あなたの負け'],
-    userWin: ['Bot の負け！', 'あなたの勝ち！'],
+    botWin: 'Zirconiaの勝ち！',
+    userWin: ({ interaction }) => {
+      return `<@${interaction.member.user.id}> の勝ち！`;
+    },
 
-    notGameOwner: '他人のマッチです `/janken` で自分のマッチを始めましょう',
-    invalidButton: '不正なボタンです',
+    notGameOwner: '他の人のじゃんけんです `/janken` でじゃんけんを始めましょう',
+    invalidButton: 'エラー: 不正なボタンです',
   },
 
   maxRound: 3,
@@ -69,7 +71,7 @@ export const DICE_CONFIG = {
       ].join('\n');
     },
 
-    invalidOption: '不正なオプションです',
+    invalidOption: 'エラー: 不正なオプションです',
   },
 };
 
@@ -92,6 +94,6 @@ export const GACHA_CONFIG = {
 
   messages: {
     invalidWeight:
-      '不正なガチャ設定です ウェイトの合計は正の整数となる必要があります',
+      'エラー: 不正なガチャ設定です ウェイトの合計は正の整数となる必要があります',
   },
 };
